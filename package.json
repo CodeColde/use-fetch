@@ -1,10 +1,18 @@
 {
   "name": "@codecolde/use-fetch",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "A react hook that allows a user to fetch data and optionally store it in the browser",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -21,6 +29,12 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.11",
+    "prettier": "^1.18.2",
+    "tslint": "^6.0.0-beta0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"
-  }
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }

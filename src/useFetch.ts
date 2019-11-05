@@ -7,7 +7,7 @@ type ReturnVal = [boolean, any];
 
 function useFetch<T> (url: string, payload?: T, key?: string, type?: StorageType): ReturnVal {
     const items = getStorageType(type, key);
-    const [data, setData] = useState(items ? items : []);
+    const [data, setData] = useState(items ? JSON.parse(items) : []);
     const [loading, setloading] = useState(!items);
 
     async function fetchData () {
@@ -16,7 +16,9 @@ function useFetch<T> (url: string, payload?: T, key?: string, type?: StorageType
 
         setData(json);
         setloading(false);
-        key && type && setStorageType(type, key, json);
+        if(!!key && !!type) {
+            setStorageType(type, key, JSON.stringify(json));
+        }
     }
 
     useEffect(() => {
