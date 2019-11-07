@@ -1,6 +1,6 @@
 function getStorageType(type?: string, key?: string) {
-    if (!key) return false; 
-    
+    if (!key) return false;
+
     switch (type) {
         case "local":
             return localStorage.getItem(key);

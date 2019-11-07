@@ -1,6 +1,6 @@
 {
   "name": "@codecolde/use-fetch",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A react hook that allows a user to fetch data and optionally store it in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/CodeColde/use-fetch.git"
   },
-  "author": "CodeColde",
+  "author": "CodeColde <hayo.web@gmail.com> (https://www.hayofriese.dev)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/CodeColde/use-fetch/issues"
