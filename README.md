@@ -2,6 +2,8 @@
 
 A very simple react hook. The goal is to fetch data from a url and optionally store it in the browser using local or session storage.
 
+Want to read through the use case? (Click here to read the Medium Article)[https://medium.com/@hayo.friese/execute-coding-projects-using-usefetch-b75aa7c5cd2].
+
 ## Usage
 To execute this function, simply declare it in a functional react component. Only parameter necessary is the url.
 
