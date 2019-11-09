@@ -1,6 +1,6 @@
 {
   "name": "@codecolde/use-fetch",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A react hook that allows a user to fetch data and optionally store it in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,8 @@
     "prepublishOnly": "npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "release": "npm publish --access public"
   },
   "repository": {
     "type": "git",
