@@ -48,10 +48,12 @@ function useFetch(url, payload, key, type) {
     var _b = react_1.useState(!items), loading = _b[0], setloading = _b[1];
     function fetchData() {
         return __awaiter(this, void 0, void 0, function () {
-            var response, json;
+            var requestUrl, response, json;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, fetch(url, payload)];
+                    case 0:
+                        requestUrl = typeof url === 'string' ? url : url.toString();
+                        return [4, fetch(requestUrl, payload)];
                     case 1:
                         response = _a.sent();
                         return [4, response.json()];
