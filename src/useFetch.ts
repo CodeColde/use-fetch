@@ -5,7 +5,7 @@ import setStorageType from "./setStorageType";
 type StorageType = "local" | "session";
 type ReturnVal = [boolean, any];
 
-function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: StorageType): ReturnVal {
+function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: StorageType, isReady: boolean = true): ReturnVal {
     const items = getStorageType(type, key);
     const [data, setData] = useState(items ? JSON.parse(items) : []);
     const [loading, setloading] = useState(!items);
@@ -23,7 +23,7 @@ function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: Stora
     }
 
     useEffect(() => {
-        if(!items) {
+        if(!items && isReady) {
             fetchData();
         }
     }, [items, url, key, type]);

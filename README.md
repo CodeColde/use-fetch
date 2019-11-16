@@ -41,6 +41,9 @@ This parameter is optional.
 ### Key
 Key refers to the key you're storing the data under in the type of storage you defined prior. Should you provide a type and not a key, it won't store anything. This parameter expects a string, and is optional.
 
+### isReady
+isReady is a boolean that checks if the function is ready to execute. Sometimes a call must be made when something exists. By default, isReady is true, but pass a boolean through that will determine whether this will run or not;
+
 ### Return Values
 The component returns your data and a boolean. By default, data is initially an empty array, but the loading boolean indicates whether the data is being collected or not.
 

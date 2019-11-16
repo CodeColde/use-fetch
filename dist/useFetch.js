@@ -42,7 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 var getStorageType_1 = __importDefault(require("./getStorageType"));
 var setStorageType_1 = __importDefault(require("./setStorageType"));
-function useFetch(url, payload, key, type) {
+function useFetch(url, payload, key, type, isReady) {
+    if (isReady === void 0) { isReady = true; }
     var items = getStorageType_1.default(type, key);
     var _a = react_1.useState(items ? JSON.parse(items) : []), data = _a[0], setData = _a[1];
     var _b = react_1.useState(!items), loading = _b[0], setloading = _b[1];
@@ -70,7 +71,7 @@ function useFetch(url, payload, key, type) {
         });
     }
     react_1.useEffect(function () {
-        if (!items) {
+        if (!items && isReady) {
             fetchData();
         }
     }, [items, url, key, type]);
