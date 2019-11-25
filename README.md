@@ -86,3 +86,23 @@ For now, there are only two possible code combinations: 404 or 500.
 404 means that the data was not stored under the key or in that storage type. A good way to debug is to see if you have your key in either storage type. Did you use a URL to fetch data from? This might mean your data was no longer cached. For this reason it's a good idea to make use of the `useFetch` hook instead.
 
 500 means that the data could not be parsed. It is always recommended you JSON.stringify your data in the appropriate key. Should you not have done this then most likely your data is faulty. If you did store JSON.stringified data, then please post a bug report indicating the problem you have.
+
+
+## Error Handling
+As of 0.1.0, Error handling is supported in the project.
+
+When a response returns the ok value as false (indicating it's not a 2xx response), an error gets returned and loading is false. The request is not stored and will retry upon page/component reload. The body that gets returned is as follows:
+
+```
+{
+    isError: boolean,
+    code: number,
+    message: string | undefined,
+    body: json
+}
+```
+
+`isError` is a unique boolean prepared for use in the data object that you would return that you can use to distinguish between regular data and an error message.
+`code` comes directly from the response code.
+`message` is sometimes provided by the status, and you can access this here.
+`body` is the response body. Some APIs provide an error message directly in the body, so you can access that here if it exists.
