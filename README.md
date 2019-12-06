@@ -12,7 +12,7 @@ import React from 'react';
 import useFetch from '@codecolde/useFetch';
 
 const Products = () => {
-    const [data, loading] = useFetch(url, payload, key, yupe);
+    const [data, loading] = useFetch(url, payload, key, type);
 
     return (
         <div>
@@ -42,9 +42,6 @@ This parameter is optional.
 
 ### Key
 Key refers to the key you're storing the data under in the type of storage you defined prior. Should you provide a type and not a key, it won't store anything. This parameter expects a string, and is optional.
-
-### isReady
-isReady is a boolean that checks if the function is ready to execute. Sometimes a call must be made when something exists. By default, isReady is true, but pass a boolean through that will determine whether this will run or not;
 
 ### Return Values
 The component returns your data and a boolean. By default, data is initially an empty array, but the loading boolean indicates whether the data is being collected or not.
@@ -87,6 +84,27 @@ For now, there are only two possible code combinations: 404 or 500.
 
 500 means that the data could not be parsed. It is always recommended you JSON.stringify your data in the appropriate key. Should you not have done this then most likely your data is faulty. If you did store JSON.stringified data, then please post a bug report indicating the problem you have.
 
+## CreateUrl
+For those looking to create a URL object, I've found that I reuse a function a lot in projects I use this package in, so I added the createUrl utility. Essentially it creates a URL object with query parameters.
+
+```
+import useFetch, { createUrl } from '@codecolde/useFetch';
+
+const Url = createUrl(
+    "https://api.url.com/api",
+    {
+      query_param: "param value",
+      query_array: ['Array', 'Value'],
+      query_number: 42,
+      query_boolean: true,
+    }
+); // https://api.url.com/api?query_param=param%20value&query_array=Array,Value&query_number=42&query_boolean=true
+const [loading, data] = useFetch(Url, {}, "allGames", "local");
+```
+
+The first parameter expects a url string. Optionally, you can add any query param that would otherwise exist in the url as an object in the second param. The function loops through the data and appends each key value pair to the search params field of the URL object. No need to pass a massive URL through anymore!
+
+This function is not dependant on useFetch. If you want to build any url with search params only, you can make use of this function. See it as free utility.
 
 ## Error Handling
 As of 0.1.0, Error handling is supported in the project.

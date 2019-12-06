@@ -45,26 +45,30 @@ var setStorageType_1 = __importDefault(require("./setStorageType"));
 var removeStorageType_1 = __importDefault(require("./removeStorageType"));
 function useFetch(url, payload, key, type) {
     var items = getStorageType_1.default(type, key);
-    var _a = react_1.useState(), error = _a[0], setError = _a[1];
-    var _b = react_1.useState(items ? JSON.parse(items) : []), data = _b[0], setData = _b[1];
-    var _c = react_1.useState(!items), loading = _c[0], setloading = _c[1];
+    var _a = react_1.useState(key), curr = _a[0], setCurr = _a[1];
+    var _b = react_1.useState(), error = _b[0], setError = _b[1];
+    var _c = react_1.useState(items ? JSON.parse(items) : []), data = _c[0], setData = _c[1];
+    var _d = react_1.useState(!items), loading = _d[0], setLoading = _d[1];
     function fetchData() {
         return __awaiter(this, void 0, void 0, function () {
             var requestUrl, response, json, err_1, val;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, 4, 5]);
+                        setLoading(true);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, 5, 6]);
                         requestUrl = typeof url === 'string' ? url : url.toString();
                         return [4, fetch(requestUrl, payload)];
-                    case 1:
+                    case 2:
                         response = _a.sent();
                         return [4, response.json()];
-                    case 2:
+                    case 3:
                         json = _a.sent();
                         if (response.ok) {
                             setData(json);
-                            setloading(false);
+                            setLoading(false);
                             if (!!key && !!type) {
                                 setStorageType_1.default(type, key, JSON.stringify(json));
                             }
@@ -76,8 +80,8 @@ function useFetch(url, payload, key, type) {
                                 body: json,
                             };
                         }
-                        return [3, 5];
-                    case 3:
+                        return [3, 6];
+                    case 4:
                         err_1 = _a.sent();
                         val = {
                             isError: true,
@@ -85,20 +89,25 @@ function useFetch(url, payload, key, type) {
                             message: err_1.message,
                             body: err_1.body
                         };
-                        setloading(false);
+                        setLoading(false);
                         setError(val);
-                        return [3, 5];
-                    case 4:
+                        return [3, 6];
+                    case 5:
                         if (error && !!type && !!key) {
                             removeStorageType_1.default(type, key);
                         }
                         return [7];
-                    case 5: return [2];
+                    case 6: return [2];
                 }
             });
         });
     }
     react_1.useEffect(function () {
+        if (key !== curr) {
+            var results = getStorageType_1.default(type, key);
+            setData(results ? JSON.parse(results) : []);
+            setCurr(key);
+        }
         if (!items && !error) {
             fetchData();
         }
