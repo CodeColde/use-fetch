@@ -5,11 +5,17 @@ import removeStorageType from "./removeStorageType";
 
 type StorageType = "local" | "session";
 type ReturnVal = [boolean, any];
+interface IError {
+    isError: boolean;
+    code: string;
+    message: string;
+    body: any;
+}
 
 function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: StorageType): ReturnVal {
     const items = getStorageType(type, key);
     const [curr, setCurr] = useState(key);
-    const [error, setError] = useState();
+    const [error, setError] = useState<IError | undefined>();
     const [data, setData] = useState(items ? JSON.parse(items) : []);
     const [loading, setLoading] = useState(!items);
 

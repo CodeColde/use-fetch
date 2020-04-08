@@ -1,6 +1,6 @@
 {
   "name": "@codecolde/use-fetch",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A react hook that allows a user to fetch data and optionally store it in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
