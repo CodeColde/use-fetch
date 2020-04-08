@@ -13,11 +13,12 @@ function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: Stora
     const [data, setData] = useState(items ? JSON.parse(items) : []);
     const [loading, setLoading] = useState(!items);
 
-    async function fetchData () {
+    async function fetchData (signal: AbortSignal) {
         setLoading(true);
         try {
             const requestUrl = typeof url === 'string' ? url : url.toString();
-            const response = await fetch(requestUrl, payload);
+            const signalledPayload = {...payload, signal};
+            const response = await fetch(requestUrl, signalledPayload);
             const json = await response.json();
             if (response.ok) {
                 setData(json);
@@ -49,14 +50,18 @@ function useFetch<T> (url: string | URL, payload?: T, key?: string, type?: Stora
     }
 
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
         if (key !== curr) {
             const results = getStorageType(type, key);
             setData(results ? JSON.parse(results) : [])
             setCurr(key);
         }
         if(!items && !error) {
-            fetchData();
+            fetchData(signal);
         }
+        return () => { controller.abort(); };
     }, [items, url, key, type, error]);
 
     return error ? [loading, error] : [loading, data];

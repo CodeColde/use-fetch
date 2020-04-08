@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -49,9 +60,9 @@ function useFetch(url, payload, key, type) {
     var _b = react_1.useState(), error = _b[0], setError = _b[1];
     var _c = react_1.useState(items ? JSON.parse(items) : []), data = _c[0], setData = _c[1];
     var _d = react_1.useState(!items), loading = _d[0], setLoading = _d[1];
-    function fetchData() {
+    function fetchData(signal) {
         return __awaiter(this, void 0, void 0, function () {
-            var requestUrl, response, json, err_1, val;
+            var requestUrl, signalledPayload, response, json, err_1, val;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -60,7 +71,8 @@ function useFetch(url, payload, key, type) {
                     case 1:
                         _a.trys.push([1, 4, 5, 6]);
                         requestUrl = typeof url === 'string' ? url : url.toString();
-                        return [4, fetch(requestUrl, payload)];
+                        signalledPayload = __assign(__assign({}, payload), { signal: signal });
+                        return [4, fetch(requestUrl, signalledPayload)];
                     case 2:
                         response = _a.sent();
                         return [4, response.json()];
@@ -103,14 +115,17 @@ function useFetch(url, payload, key, type) {
         });
     }
     react_1.useEffect(function () {
+        var controller = new AbortController();
+        var signal = controller.signal;
         if (key !== curr) {
             var results = getStorageType_1.default(type, key);
             setData(results ? JSON.parse(results) : []);
             setCurr(key);
         }
         if (!items && !error) {
-            fetchData();
+            fetchData(signal);
         }
+        return function () { controller.abort(); };
     }, [items, url, key, type, error]);
     return error ? [loading, error] : [loading, data];
 }
