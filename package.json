@@ -1,6 +1,6 @@
 {
   "name": "@codecolde/use-fetch",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "A react hook that allows a user to fetch data and optionally store it in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/CodeColde/use-fetch#readme",
   "dependencies": {
-    "react": "^16.11.0"
+    "react": "^17.0.2"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11",
+    "@types/react": "^17.0.3",
     "prettier": "^1.18.2",
     "tslint": "^6.0.0-beta0",
     "tslint-config-prettier": "^1.18.0",
